@@ -1,18 +1,15 @@
 defmodule Polls do
-  @moduledoc """
-  Documentation for `Polls`.
-  """
+  use Application
 
-  @doc """
-  Hello world.
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
 
-  ## Examples
+    children = [
+      {Bandit, plug: Polls.Api.Router, scheme: :http, port: Application.get_env(:polls, :port)},
+      Users.Repo
+    ]
 
-      iex> Polls.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one, name: Polls.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end

@@ -1,0 +1,35 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: polls
+      POSTGRES_PASSWORD: "polls_pass"
+      POSTGRES_DB: "polls"
+
+  web:
+    build: .
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: "postgres"
+      DB_NAME: "polls"
+      DB_USER: polls
+      DB_PASS: "polls_pass"
+      PORT: 8000
+    depends_on:
+      - postgres
+    # command:
+    #   - ./dev.sh
+
+volumes:
+  pg-data:
