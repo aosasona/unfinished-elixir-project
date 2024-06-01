@@ -7,10 +7,10 @@ set -e
 mix deps.get
 
 # Wait for Postgres to become available.
-until psql -h db -U "postgres" -c '\q' 2>/dev/null; do
-  >&2 echo "Postgres is unavailable - sleeping"
-  sleep 1
-done
+# until psql -h db -U "postgres" -c '\q' 2>/dev/null; do
+#   >&2 echo "Postgres is unavailable - sleeping"
+#   sleep 1
+# done
 
 # echo "\nPostgres is available: continuing with database setup..."
 
@@ -18,4 +18,4 @@ done
 mix ecto.create
 mix ecto.migrate
 
-mix run --no-halt
+# mix run --no-halt

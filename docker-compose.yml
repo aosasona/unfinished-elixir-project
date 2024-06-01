@@ -13,7 +13,9 @@ services:
       POSTGRES_DB: "polls"
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
     volumes:
       - type: bind
         source: .
@@ -28,8 +30,8 @@ services:
       PORT: 8000
     depends_on:
       - postgres
-    # command:
-    #   - ./dev.sh
+    command:
+      - ./dev.sh
 
 volumes:
   pg-data:

@@ -4,7 +4,7 @@ ARG PORT=8000
 ENV PORT=${PORT}
 ENV MIX_ENV="prod"
 
-RUN apk add git build-essential inotify-tools postgresql-client
+RUN apk add git inotify-tools postgresql-client
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ RUN mix compile && \
 
 FROM elixir:1.16.3-alpine
 
-RUN apk add git build-essential inotify-tools postgresql-client
+RUN apk add git inotify-tools postgresql-client
 
 COPY --from=build /app/_build/prod/rel/polls /opt/polls
 
